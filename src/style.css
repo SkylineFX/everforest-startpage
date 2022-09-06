@@ -1,0 +1,29 @@
+:root {
+  font-family: 'DM Sans', sans-serif;
+  font-family: 'Josefin Sans', sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-family: 'Space Mono', monospace;
+  font-family: 'Yrsa', serif;
+  font-family: 'Overpass', sans-serif;
+
+  color: #d3c6aa;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+#app {
+  min-height: 100vh; 
+  width: 100vw;
+  display: grid;
+  place-content: center;
+  background-color: #2b3339;
+  }
