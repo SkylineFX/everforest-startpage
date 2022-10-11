@@ -18,14 +18,33 @@ setInterval(() => {
 
 
 // Weather
-const location = "Bucharest"
-const apiKey = '27b65c23de2d23cb0d71a8aafd988903'
-const apiLink = `http://api.openweathermap.org/data/2.5/weather?appid=${apiKey}&q=${location}`;
+const refreshTime = 1000 * 60 * 30;
+
+const success = (pos: any) => {
+
+  const apiKey = '27b65c23de2d23cb0d71a8aafd988903'
+  const apiLink = `https://api.openweathermap.org/data/2.5/weather?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&units=metric&appid=${apiKey}`
+  getWeather(apiLink);
+
+  setInterval(() => {
+    getWeather(apiLink)
+  }, refreshTime)
+}
+
+const error = (err: any) => {
+  console.warn(`ERROR(${err.code}): ${err.message}`);
+}
+
+const options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0
+};
 
 const getWeather = async (apiLink: string) => {
   let weatherObj = await fetch(apiLink);
   let weatherData = JSON.parse(await weatherObj.text());
-  temp.value = Math.floor(weatherData.main.temp - 273.15) + '°' + 'C';
+  temp.value = Math.floor(weatherData.main.temp) + '°' + 'C';
   desc.value = weatherData.weather[0].description;
   icon.value = setIcon(weatherData.weather[0].icon);
 }
@@ -46,11 +65,8 @@ const setIcon = (code: string) => {
 const temp = ref();
 const desc = ref(); 
 const icon = ref();
-getWeather(apiLink);
 
-setInterval(() => {
-  getWeather(apiLink)
-}, 1000 * 60 * 30)
+navigator.geolocation.getCurrentPosition(success, error, options);
 </script>
 
 <template>
