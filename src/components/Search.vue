@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { ref } from 'vue'
+  import Icon from './Icon.vue'
 
   const query = ref();
   const search = (event: any) => {
@@ -20,22 +21,23 @@
 
 <style scoped>
   .input-container {
-    width: 530px;
-    height: fit-content;
-    margin: 100px 0 70px 0;
+    width: 100%;
+    height: 3rem;
     position: relative;
-    border-bottom: 2px solid #d3c6aa;
+    border-bottom: 2px solid var(--fg);
+    display: flex;
+    align-items: center;
   }
 
   input {
     width: calc(100% - 30px);
-    appearance: none;
+    height: inherit;
     border: none;
     background: #2b3339;
     outline: none;
-    caret-color: #d3c6aa;
+    caret-color: var(--fg);
     font-size: 24px;
-    color: #d3c6aa;
+    color: var(--fg);
     line-height: 2;
     position: absolute;
     bottom: 0;
@@ -43,13 +45,13 @@
     z-index: 1;
   }
   
-  .input-container::before {
+.input-container::before {
     content: ">";
-    color: #d3c6aa;
+    color: var(--fg);
     position: absolute;
     left: 0px;
     bottom: 0px;
-    font-size: 35px;
+    font-size: 30px;
     z-index: 2;
   }
 </style>

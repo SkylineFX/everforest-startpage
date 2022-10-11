@@ -2,7 +2,7 @@
   <component :is="icon" />
 </template>
 
-<script>
+<script lang="ts">
 import * as icons from "lucide-vue-next";
 import { computed } from 'vue'
 

@@ -7,7 +7,7 @@
 <template>
   <main>
     <div class="image">
-      <img src="src/assets/succulent.png" alt="">
+      <img src="/image.png" alt="">
     </div>
     <div class="content">
       <Info/>
@@ -19,26 +19,31 @@
 
 <style scoped>
   main {
-    min-width: 1130px;
-    height: 500px;
+    min-width: 70rem;
+    height: 31rem;
     display: flex;
     justify-content: space-between;
     user-select: none;
   }
 
   .image {
-    max-width: 500px;
-    height: 500px;
+    max-width: 31rem;
+    height: 100%;
   }
   .image img {
     height: 100%;
     width: 100%;
     border-radius: 50px;
+    user-select: none;
+    pointer-events: none;
   }
 
   .content {
-    width: 530px;
+    width: 33rem;
     height: 100%;
     align-self: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 </style>

@@ -1,22 +1,56 @@
 <script setup lang="ts">
-  import { ref } from 'vue';
-  import Icon from './Icon.vue'
+import { ref } from 'vue';
+import Icon from './Icon.vue'
 
-  // Date and time
-  const currentDate = ref(new Date());
-  const formatDate = new Intl.DateTimeFormat("en-GB", { weekday: "long", day: "numeric", month: "long" }).format;
+// Date and time
+const currentDate = ref(new Date());
+const formatDate = new Intl.DateTimeFormat("en-GB", { weekday: "long", day: "numeric", month: "long" }).format;
 
-  const time = ref(currentDate.value.toLocaleTimeString('en-GB', {hour: '2-digit', minute:'2-digit', hour12:false}));
-  const date = ref(formatDate(currentDate.value));
+//init
+const time = ref(currentDate.value.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false }));
+const date = ref(formatDate(currentDate.value));
 
-  setInterval(() => {
-    currentDate.value = new Date();
-    time.value = currentDate.value.toLocaleTimeString('en-GB', {hour: '2-digit', minute:'2-digit', hour12:false});
-    date.value = formatDate(currentDate.value);
-  }, 10000);
+setInterval(() => {
+  currentDate.value = new Date();
+  time.value = currentDate.value.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
+  date.value = formatDate(currentDate.value);
+}, 1000 * 10);
 
-  // Weather
-  //TODO
+
+// Weather
+const location = "Bucharest"
+const apiKey = '27b65c23de2d23cb0d71a8aafd988903'
+const apiLink = `http://api.openweathermap.org/data/2.5/weather?appid=${apiKey}&q=${location}`;
+
+const getWeather = async (apiLink: string) => {
+  let weatherObj = await fetch(apiLink);
+  let weatherData = JSON.parse(await weatherObj.text());
+  temp.value = Math.floor(weatherData.main.temp - 273.15) + '°' + 'C';
+  desc.value = weatherData.weather[0].description;
+  icon.value = setIcon(weatherData.weather[0].icon);
+}
+
+const setIcon = (code: string) => {
+  if(code == '01d') return 'Sun'
+  if(code == '01n') return 'Moon'
+  if(code.includes('02')) return 'CloudSun'
+  if(code.includes('03')) return 'Cloud'
+  if(code.includes('04')) return 'Cloudy'
+  if(code.includes('09') || code.includes('10')) return 'CloudRainWind'
+  if(code.includes('11')) return 'CloudLightning'
+  if(code.includes('13')) return 'Snowflake'
+  if(code.includes('50')) return 'CloudFog'
+}
+
+//init
+const temp = ref();
+const desc = ref(); 
+const icon = ref();
+getWeather(apiLink);
+
+setInterval(() => {
+  getWeather(apiLink)
+}, 1000 * 60 * 30)
 </script>
 
 <template>
@@ -26,46 +60,54 @@
       <div class="date">{{date}}</div>
     </div>
     <div class="weather-container">
-      <Icon name="Cloud" size="50"/>
       <div class="weather">
-        <p>27°C</p>
-        <span>75%</span>
+        <Icon :name="icon" size="35" style="margin-bottom: 7px"/>
+        <div class="degrees">{{temp}}</div>
       </div>
+      <div class="description">{{desc}}</div>
     </div>
   </div>
 </template>
 
 <style scoped>
 .info {
-    width: 530px;
-    display: flex;
-    justify-content: space-between;
-  }
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
 
-  .time {
-    font-size: 48px;
-  }
+.datetime-container, .weather-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 
-  .weather-container {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-  }
+.time {
+  font-size: 48px;
+  height: 75%;
+}
 
-  .weather {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+.date {
+  height: 25%;
+}
 
-  .weather p {
-    font-size: 22px;
-    border-bottom: 2px solid #d3c6aa;
-    margin-bottom: 3px;
-  }
+.weather {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  height: 75%;
+}
 
-  .weather span {
-    font-size: 22px;
-  }
+.degrees {
+  width: fit-content;
+  height: 40px;
+  font-size: 36px;
+  margin-bottom: 7px;
+}
+
+.description {
+  height: 25%;
+  text-align: right;
+}
 </style>

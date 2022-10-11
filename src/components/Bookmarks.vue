@@ -30,12 +30,11 @@
 
 <style scoped>
   .bookmark-container {
-    width: 530px;
-    height: calc(70% - 80px);
+    width: 100%;
     display: grid;
-    grid-template-columns: repeat(2, minmax(200px, 1fr));
-    grid-template-rows: repeat(auto-fit, minmax(3rem, 1fr));
-    grid-gap: 30px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 3rem);
+    grid-gap: 40px;
   }
 
   .bookmark {
@@ -49,7 +48,6 @@
   }
 
   .link {
-    color: #a7c080;
+    color: var(--accent);
   }
-
 </style>
