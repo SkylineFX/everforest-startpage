@@ -6,15 +6,15 @@
   const search = (event: any) => {
     if(event.key == "Enter" && query)
     {
-      if(query.value.includes('.')) window.open('https://' + query.value);
-      else window.open('https://duckduckgo.com/?q=' + query.value.replace(/ /g, '+')); //, '_blank');
+      if(query.value.includes('.')) window.open('https://' + query.value, '_self');
+      else window.open('https://duckduckgo.com/?q=' + query.value.replace(/ /g, '+'), '_self');
       query.value = '';
     }
   }
-  const input = ref()
 
+  const input = ref()
   onMounted(() => {
-    input.value.focus()
+    window.addEventListener("load", () => input.value.focus());
   })
 </script>
 
