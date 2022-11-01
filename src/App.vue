@@ -7,7 +7,7 @@
 <template>
   <main>
     <div class="image">
-      <img src="/image.png" alt="">
+      <img src="/image-small.png" alt="">
     </div>
     <div class="content">
       <Info/>
@@ -45,5 +45,33 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+  }
+
+  @media screen and (max-width: 1200px) {
+    main {
+      height: fit-content;
+      width: 100vw;
+      flex-direction: column-reverse;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .image {
+      display: none;
+    }
+    .content {
+      height: fit-content;
+      width: 90vw;
+      justify-content: flex-start;
+      gap: 5rem;
+      margin: 5rem 0;
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+    .content {
+      gap: 3rem;
+      margin: 3rem 0;
+    }
   }
 </style>

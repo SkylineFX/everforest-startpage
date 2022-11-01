@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { ref } from 'vue'
+  import { ref, onMounted } from 'vue'
   import Icon from './Icon.vue'
 
   const query = ref();
@@ -7,15 +7,20 @@
     if(event.key == "Enter" && query)
     {
       if(query.value.includes('.')) window.open('https://' + query.value);
-      else window.open('https://duckduckgo.com/?q=' + query.value.replace(/ /g, '+'), '_blank');
+      else window.open('https://duckduckgo.com/?q=' + query.value.replace(/ /g, '+')); //, '_blank');
       query.value = '';
     }
   }
+  const input = ref()
+
+  onMounted(() => {
+    input.value.focus()
+  })
 </script>
 
 <template>
 <div class="input-container">
-  <input type="text" autofocus autocomplete="off" placeholder="search..." v-model="query" @keyup="search">
+  <input ref="input" type="text" autofocus autocomplete="off" placeholder="search..." v-model="query" @keyup="search">
 </div>
 </template>
 

@@ -126,4 +126,13 @@ navigator.geolocation.getCurrentPosition(success, error, options);
   height: 25%;
   text-align: right;
 }
+
+@media screen and (max-width: 500px) {
+    .time {
+      font-size: 36px;
+    }
+    .degrees {
+      font-size: 32px;
+    }
+  }
 </style>

@@ -50,4 +50,10 @@
   .link {
     color: var(--accent);
   }
+
+  @media screen and (max-width: 500px) {
+    .bookmark-container {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
 </style>
